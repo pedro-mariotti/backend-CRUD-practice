@@ -7,7 +7,7 @@
     "start:app": "nodemon api/index.js",
     "start:db": "docker compose up -d",
     "stop:db": "docker compose down",
-    "generate-secret":"node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\""
+    "generate-secret": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\""
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "mongoose": "^8.14.1"
   },
   "devDependencies": {
+    "eslint": "^9.26.0",
     "nodemon": "^3.1.10"
   }
 }

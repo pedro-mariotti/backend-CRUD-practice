@@ -6,7 +6,7 @@ const BlogPostSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  user: {
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
