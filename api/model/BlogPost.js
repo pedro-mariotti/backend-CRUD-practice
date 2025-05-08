@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import AutoIncrement from "mongoose-sequence";
 
 const BlogPostSchema = new mongoose.Schema({
   title: {
@@ -18,5 +19,7 @@ const BlogPostSchema = new mongoose.Schema({
   },
 });
 
+BlogPostSchema.plugin(AutoIncrement(mongoose), { inc_field: "postID" });
 const BlogPost = mongoose.model("BlogPost", BlogPostSchema);
+
 export default BlogPost;

@@ -1,5 +1,5 @@
 import BlogPost from "../model/blogPost.model.js";
-import { saveBlogPost } from "../services/blog.services.js";
+import { saveBlogPost, patchBlogPost } from "../services/blog.services.js";
 
 const protectedBlogPostSubmit = async (req, res) => {
   console.log("Submitting blog post", req.body);
@@ -17,15 +17,70 @@ const protectedBlogPostSubmit = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+const protectedBlogPostPatchByTitle = async (req, res) => {
+  const { postID } = req.params;
+  const { content } = req.body;
+  const userId = req.userId;
+  console.log("Updating blog post with title", title);
 
-const protectedBlogPostGetByUserId = async (req, res) => {
-  const { userId } = req.params; // Use userId from req.params
-  console.log("Fetching blog posts for user", userId);
+  patchBlogPost(req, res);
+};
+
+const protectedBlogPostDeleteByPostID = async (req, res) => {
+  const { postID } = req.params;
+  const userId = req.userId;
+  console.log("Deleting blog post with title", postID);
+
   try {
-    const blogPosts = await BlogPost.find({ author: userId }).populate(
-      "author",
-      ["username", "email"]
-    );
+    const blogPost = await BlogPost.findOne({ postID });
+
+    if (!blogPost) {
+      return res.status(404).json({ message: "Blog post not found" });
+    }
+
+    if (blogPost.author.toString() !== userId) {
+      return res.status(403).json({ message: "Access denied: You are not the author of this post" });
+    }
+
+    await BlogPost.findOneAndDelete({ postID });
+
+    res.status(200).json({ message: "Blog post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting blog post", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const protectedBlogPostGetByPostID = async (req, res) => {
+  const { postID } = req.params; // Obtendo o título da URL
+  console.log("Fetching blog post with postID", postID);
+
+  try {
+    const blogPost = await BlogPost.findOne({ postID }).populate("author", [
+      "username",
+      "email",
+    ]);
+
+    if (!blogPost) {
+      return res.status(404).json({ message: "Blog post not found" });
+    }
+
+    res.status(200).json({ message: "Blog post fetched successfully", blogPost });
+  } catch (error) {
+    console.error("Error fetching blog post", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const protectedBlogPostGetAllPosts = async (req, res) => {
+  const userId = req.userId;
+  console.log("Fetching blog posts for the logged-in user", userId);
+
+  try {
+    const blogPosts = await BlogPost.find({ author: userId }).populate("author", [
+      "username",
+      "email",
+    ]);
     res
       .status(200)
       .json({ message: "Blog posts fetched successfully", blogPosts });
@@ -33,4 +88,11 @@ const protectedBlogPostGetByUserId = async (req, res) => {
     console.error("Error fetching blog posts", error);
     res.status(500).json({ message: "Internal server error" });
   }
+};
+export default {
+  protectedBlogPostSubmit,
+  protectedBlogPostDeleteByPostID,
+  protectedBlogPostGetByPostID,
+  protectedBlogPostGetAllPosts,
+  protectedBlogPostPatchByTitle
 };

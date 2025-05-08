@@ -1,5 +1,4 @@
 import BlogPost from "../model/BlogPost.js";
-import jwt from "jsonwebtoken";
 
 export const saveBlogPost = async (req, res) => {
   const { title, content } = req.body;
@@ -17,5 +16,34 @@ export const saveBlogPost = async (req, res) => {
     return res
       .status(500)
       .json({ message: `Error submitting blog post:${error}` });
+  }
+};
+
+export const patchBlogPost = async (req, res) => {
+  const { postID } = req.params; 
+  const { title, content } = req.body;
+
+  try {
+    const blogPost = await BlogPost.findOne({ postID });
+
+    if (!blogPost) {
+      return res.status(404).json({ message: "Blog post not found" });
+    }
+
+    if (blogPost.author.toString() !== req.userId) {
+      return res.status(403).json({ message: "Access denied: You are not the author of this post" });
+    }
+
+    const updatedPost = await BlogPost.findOneAndUpdate(
+      {postID},
+      { title },
+      { content },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Blog post updated successfully", updatedPost });
+  } catch (error) {
+    console.error("Error updating blog post", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

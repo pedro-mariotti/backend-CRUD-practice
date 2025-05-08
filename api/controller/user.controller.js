@@ -1,4 +1,4 @@
-import User from "../model/User.js";
+// import User from "../model/User.js";
 import {saveUser, loginUser} from "../services/user.services.js";
 
 const isValidEmail = (email) => {

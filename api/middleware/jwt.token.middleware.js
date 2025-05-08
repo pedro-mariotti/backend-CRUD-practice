@@ -1,4 +1,9 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const verifyToken = (req, res, next) => {
   try{
