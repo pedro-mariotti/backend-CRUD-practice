@@ -9,5 +9,6 @@ router.get("/blog/:postId", verifyToken, protectedController.protectedBlogPostGe
 router.post("/blog", verifyToken, protectedController.protectedBlogPostSubmit);
 router.delete("/blog/:postId", verifyToken, protectedController.protectedBlogPostDeleteByPostID);
 router.patch("/blog/:postId", verifyToken, protectedController.protectedBlogPostPatchByPostID);
+router.put("/blog/:postId", verifyToken, protectedController.protectedBlogPostPutByPostID);
 
 export default router;

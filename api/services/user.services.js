@@ -1,13 +1,18 @@
+/* eslint-disable no-undef */
 import User from "../model/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+
+dotenv.config();
 
 export const saveUser = async(req, res) => {
     const { username, password, email } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     
     try{
-        const savedUser = await User.create({
+        await User.create({
             username,
             password: hashedPassword,
             email

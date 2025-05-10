@@ -1,4 +1,4 @@
-import BlogPost from "../model/blogPost.model.js";
+import BlogPost from "../model/BlogPost.js";
 import { saveBlogPost, patchBlogPost, putBlogPost } from "../services/blog.services.js";
 
 const protectedBlogPostSubmit = async (req, res) => {
@@ -98,5 +98,6 @@ export default {
   protectedBlogPostDeleteByPostID,
   protectedBlogPostGetByPostID,
   protectedBlogPostGetAllPosts,
-  protectedBlogPostPatchByPostID
+  protectedBlogPostPatchByPostID,
+  protectedBlogPostPutByPostID
 };

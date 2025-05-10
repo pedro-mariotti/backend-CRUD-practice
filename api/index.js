@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import express from "express";
 import dotenv from "dotenv";
 import db from "./database/configdb.js";

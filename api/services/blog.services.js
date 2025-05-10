@@ -60,19 +60,20 @@ export const putBlogPost = async (req, res) => {
     if (!blogPost) {
       return res.status(404).json({ message: "Blog post not found" });
     }
+
     if (blogPost.author.toString() !== req.userId) {
       return res.status(403).json({ message: "Access denied: You are not the author of this post" });
     }
-        const updatedPost = await BlogPost.findOneAndUpdate(
-      {postID},
-      { title },
-      { content },
-      { new: true }
+
+    const updatedPost = await BlogPost.findOneAndUpdate(
+      { postID },
+      { title, content },
+      { new: true } 
     );
+
     res.status(200).json({ message: "Blog post updated successfully", updatedPost });
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error updating blog post", error);
     res.status(500).json({ message: "Internal server error" });
   }
-}
+};
