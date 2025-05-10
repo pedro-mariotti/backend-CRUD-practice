@@ -4,10 +4,10 @@ import verifyToken from "../middleware/jwt.token.middleware.js";
 
 const router = express.Router();
 
-router.get("/blog", verifyToken, protectedController.protectedBlogPostGetAllPosts);
-router.get("/blog/:userId", verifyToken, protectedController.protectedBlogPostGetByUserId);
+router.get("/blog", verifyToken, protectedController.protectedBlogPostGetAllPosts); // traz todos os posts do usuario logado
+router.get("/blog/:postId", verifyToken, protectedController.protectedBlogPostGetByPostID);
 router.post("/blog", verifyToken, protectedController.protectedBlogPostSubmit);
-router.delete("/blog/:title", verifyToken, protectedController.protectedBlogPostDeleteByTitle);
-router.patch("/blog/:title", verifyToken, protectedController.protectedBlogPostPatchByTitle);
+router.delete("/blog/:postId", verifyToken, protectedController.protectedBlogPostDeleteByPostID);
+router.patch("/blog/:postId", verifyToken, protectedController.protectedBlogPostPatchByPostID);
 
 export default router;

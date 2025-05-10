@@ -1,5 +1,5 @@
 import BlogPost from "../model/blogPost.model.js";
-import { saveBlogPost, patchBlogPost } from "../services/blog.services.js";
+import { saveBlogPost, patchBlogPost, putBlogPost } from "../services/blog.services.js";
 
 const protectedBlogPostSubmit = async (req, res) => {
   console.log("Submitting blog post", req.body);
@@ -17,13 +17,17 @@ const protectedBlogPostSubmit = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-const protectedBlogPostPatchByTitle = async (req, res) => {
+const protectedBlogPostPatchByPostID = async (req, res) => {
   const { postID } = req.params;
-  const { content } = req.body;
-  const userId = req.userId;
-  console.log("Updating blog post with title", title);
+  console.log("Updating blog post with title", postID);
 
   patchBlogPost(req, res);
+};
+const protectedBlogPostPutByPostID = async (req, res) => {
+  const { postID } = req.params;
+  console.log("Updating blog post with title", postID);
+
+  putBlogPost(req, res);
 };
 
 const protectedBlogPostDeleteByPostID = async (req, res) => {
@@ -94,5 +98,5 @@ export default {
   protectedBlogPostDeleteByPostID,
   protectedBlogPostGetByPostID,
   protectedBlogPostGetAllPosts,
-  protectedBlogPostPatchByTitle
+  protectedBlogPostPatchByPostID
 };
