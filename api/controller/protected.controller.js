@@ -19,13 +19,13 @@ const protectedBlogPostSubmit = async (req, res) => {
 };
 const protectedBlogPostPatchByPostID = async (req, res) => {
   const { postID } = req.params;
-  console.log("Updating blog post with title", postID);
+  console.log("Updating blog post with postID", postID);
 
   patchBlogPost(req, res);
 };
 const protectedBlogPostPutByPostID = async (req, res) => {
   const { postID } = req.params;
-  console.log("Updating blog post with title", postID);
+  console.log("Updating blog post with postID", postID);
 
   putBlogPost(req, res);
 };
@@ -33,7 +33,7 @@ const protectedBlogPostPutByPostID = async (req, res) => {
 const protectedBlogPostDeleteByPostID = async (req, res) => {
   const { postID } = req.params;
   const userId = req.userId;
-  console.log("Deleting blog post with title", postID);
+  console.log("Deleting blog post with postID", postID);
 
   try {
     const blogPost = await BlogPost.findOne({ postID });

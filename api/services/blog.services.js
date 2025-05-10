@@ -27,10 +27,12 @@ export const patchBlogPost = async (req, res) => {
     const blogPost = await BlogPost.findOne({ postID });
 
     if (!blogPost) {
+      console.log("Blog post not found");
       return res.status(404).json({ message: "Blog post not found" });
     }
 
     if (blogPost.author.toString() !== req.userId) {
+      console.log("Access denied: You are not the author of this post");
       return res.status(403).json({ message: "Access denied: You are not the author of this post" });
     }
 
