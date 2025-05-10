@@ -10,13 +10,13 @@ const protectedBlogPostSubmit = async (req, res) => {
       .json({ message: "Please input valid title and content" });
   }
   try {
-    await saveBlogPost(req, res); // Await the saveBlogPost function
-    res.status(200).json({ message: "Blog post submitted successfully" });
+    await saveBlogPost(req, res); // A função saveBlogPost já envia a resposta
   } catch (error) {
     console.error("Error saving blog post", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 const protectedBlogPostPatchByPostID = async (req, res) => {
   const { postID } = req.params;
   console.log("Updating blog post with postID", postID);
