@@ -5,7 +5,6 @@ const BlogPostSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    unique: true,
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
@@ -18,6 +17,7 @@ const BlogPostSchema = new mongoose.Schema({
     select: false,
   },
 });
+
 
 BlogPostSchema.plugin(AutoIncrement(mongoose), { inc_field: "postID" });
 const BlogPost = mongoose.model("BlogPost", BlogPostSchema);
