@@ -56,7 +56,7 @@ const protectedBlogPostDeleteByPostID = async (req, res) => {
 };
 
 const protectedBlogPostGetByPostID = async (req, res) => {
-  const { postID } = req.params; // Obtendo o título da URL
+  const { postID } = req.params; // Obtendo o postID da URL
   console.log("Fetching blog post with postID", postID);
 
   try {

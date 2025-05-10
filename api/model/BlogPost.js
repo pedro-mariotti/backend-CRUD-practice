@@ -14,7 +14,7 @@ const BlogPostSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true,
-    select: false,
+    select: true,
   },
 });
 
