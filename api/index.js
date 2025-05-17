@@ -14,8 +14,13 @@ db.connect();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Enable CORS for all origins
-app.use(cors());
+// Enable CORS with specific configuration
+const corsOptions = {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
